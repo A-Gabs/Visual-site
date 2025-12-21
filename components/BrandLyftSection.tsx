@@ -16,15 +16,17 @@ const BrandLyftSection: React.FC = () => {
     { url: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=400&auto=format&fit=crop", alt: "Viaje en Moto" }
   ];
 
+  // Triplicamos las imágenes para el efecto infinito
   const displayImages = [...baseImages, ...baseImages, ...baseImages];
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const itemWidth = scrollContainer.scrollWidth / 3;
-    currentScrollPos.current = itemWidth;
-    scrollContainer.scrollLeft = itemWidth;
+    // Centramos el scroll al inicio en la sección del medio
+    const oneThird = scrollContainer.scrollWidth / 3;
+    currentScrollPos.current = oneThird;
+    scrollContainer.scrollLeft = oneThird;
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -39,11 +41,13 @@ const BrandLyftSection: React.FC = () => {
     const deltaX = e.clientX - lastMouseX.current;
     lastMouseX.current = e.clientX;
 
-    currentScrollPos.current -= deltaX * 1.2;
+    // El scroll sigue el movimiento del mouse
+    currentScrollPos.current -= deltaX * 1.5;
 
     const totalWidth = scrollContainer.scrollWidth;
     const oneThird = totalWidth / 3;
 
+    // Lógica de loop infinito
     if (currentScrollPos.current >= oneThird * 2) {
       currentScrollPos.current -= oneThird;
     } else if (currentScrollPos.current <= 0) {
@@ -66,16 +70,15 @@ const BrandLyftSection: React.FC = () => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen w-full bg-[#fdfaf5] flex flex-col items-center py-12 px-6 overflow-hidden select-none"
+      className="relative h-screen w-full bg-[#fdfaf5] flex flex-col items-center justify-between py-8 px-6 overflow-hidden select-none"
     >
-      
-      {/* Marco Perimetral */}
-      <div className="absolute inset-4 md:inset-6 border-[1px] border-[#e8d5bb]/50 rounded-[40px] md:rounded-[60px] pointer-events-none z-0 shadow-sm" />
+      {/* Marco Perimetral decorativo */}
+      <div className="absolute inset-4 border-[1px] border-[#e8d5bb]/40 rounded-[40px] pointer-events-none z-0 shadow-sm" />
 
-      <div className="relative z-10 w-full max-w-[1300px] flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-[1300px] h-full flex flex-col items-center justify-between">
         
-        {/* Navbar */}
-        <nav className="w-full flex items-center justify-between mt-4 mb-16 px-10">
+        {/* Navbar Compacto */}
+        <nav className="w-full flex items-center justify-between px-6 pt-2">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 bg-[#1e2329] rounded-lg flex items-center justify-center transform hover:rotate-6 transition-transform cursor-pointer">
               <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -86,122 +89,67 @@ const BrandLyftSection: React.FC = () => {
             <span className="font-black text-xl tracking-tighter text-[#1e2329]">BrandLyft</span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-12 text-[13px] font-bold text-gray-500">
-            <a href="#" className="hover:text-black transition-colors relative group">
-              Marcas
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#" className="hover:text-black transition-colors relative group">
-              Creadores
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#" className="hover:text-black transition-colors relative group">
-              Precios
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#" className="hover:text-black transition-colors relative group">
-              Casos
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-black transition-all group-hover:w-full"></span>
-            </a>
+          <div className="hidden lg:flex items-center gap-8 text-[12px] font-bold text-gray-500 uppercase tracking-widest">
+            <a href="#" className="hover:text-black transition-colors">Marcas</a>
+            <a href="#" className="hover:text-black transition-colors">Creadores</a>
+            <a href="#" className="hover:text-black transition-colors">Precios</a>
           </div>
 
-          <div className="flex items-center gap-8">
-            <button className="text-[13px] font-bold text-gray-500 hover:text-black">Entrar</button>
-            <button className="bg-[#1e2329] text-white px-7 py-2.5 rounded-full text-[13px] font-bold hover:bg-black transition-all shadow-lg active:scale-95">
-              Registrarse
-            </button>
-          </div>
+          <button className="bg-[#1e2329] text-white px-6 py-2 rounded-full text-[12px] font-bold hover:bg-black transition-all shadow-md active:scale-95">
+            Registrarse
+          </button>
         </nav>
 
-        {/* Hero Section */}
-        <div className="flex flex-col items-center text-center max-w-5xl px-4">
-          <div className="bg-[#fceccf] text-[#8a5e1e] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.25em] mb-12 shadow-sm">
-            Únete a más de 100,000 creadores felices
+        {/* Hero Section Ajustado */}
+        <div className="flex flex-col items-center text-center mt-4">
+          <div className="bg-[#fceccf] text-[#8a5e1e] px-4 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.2em] mb-6 shadow-sm">
+            Más de 100k creadores
           </div>
 
-          <div className="relative mb-8">
-            <h1 className="text-6xl md:text-[92px] font-black text-[#0a0b10] leading-[0.95] tracking-tighter">
-              Cautiva Audiencias <br />
-              con Videos Increíbles
-            </h1>
-            
-            {/* Anotación */}
-            <div className="absolute -right-32 top-12 hidden xl:block">
-              <div className="flex flex-col items-start rotate-[12deg]">
-                <span className="font-serif italic text-gray-600 text-xl leading-none mb-2">Eleva <br/> tu marca</span>
-                <svg className="w-16 h-16 text-gray-400 -mt-2 -ml-3" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
-                  <path d="M20 20 Q 50 20, 65 70 M65 70 L55 60 M65 70 L75 62" strokeLinecap="round" />
-                </svg>
-              </div>
-            </div>
+          <h1 className="text-5xl md:text-[72px] font-black text-[#0a0b10] leading-[0.9] tracking-tighter mb-4">
+            Cautiva Audiencias <br />
+            con Videos Pro
+          </h1>
 
-            <div className="absolute -left-16 top-20 hidden xl:block opacity-40">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="black" strokeWidth="2.5">
-                <path d="M10 30 L2 38 M20 20 L5 35 M30 10 L10 30" />
-              </svg>
-            </div>
-          </div>
-
-          <p className="max-w-2xl text-gray-500 text-[18px] font-medium leading-relaxed mb-16">
-            Impulsa tu marca con videos cortos de alto impacto creados por expertos. <br className="hidden md:block" />
-            Nuestro equipo está listo para hacer despegar tu negocio.
+          <p className="max-w-xl text-gray-500 text-[16px] font-medium leading-tight">
+            Impulsa tu marca con videos cortos de alto impacto creados por expertos.
           </p>
         </div>
 
-        {/* Carrusel */}
-        <div className="w-full flex justify-center mb-20 px-4 overflow-visible cursor-crosshair">
+        {/* Carrusel (Ahora siempre visible) */}
+        <div className="w-full flex justify-center overflow-visible cursor-ew-resize my-4">
           <div 
             ref={scrollRef}
-            className="flex items-center gap-4 sm:gap-6 w-full max-w-full overflow-hidden py-8 px-2 pointer-events-none"
+            className="flex items-center gap-4 w-full max-w-full overflow-hidden py-4 px-2 pointer-events-none"
             style={{ scrollBehavior: 'auto' }}
           >
             {displayImages.map((img, i) => (
               <div 
                 key={i} 
-                className="flex-shrink-0 w-[140px] sm:w-[170px] md:w-[190px] lg:w-[210px] aspect-[9/16] rounded-[32px] md:rounded-[48px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_25px_80px_rgba(0,0,0,0.22)] bg-gray-100 border border-gray-100/50 group"
+                className="flex-shrink-0 w-[120px] sm:w-[150px] md:w-[170px] aspect-[9/16] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.1)] transition-all duration-300 bg-gray-100 border border-gray-100/50"
               >
                 <img 
                   src={img.url} 
                   alt={img.alt} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 pointer-events-none"
+                  className="w-full h-full object-cover pointer-events-none"
                 />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="relative mb-20 flex flex-col items-center">
-          <div className="relative">
-            <button className="bg-[#f87171] text-white px-12 py-5 rounded-full text-base font-black shadow-[0_15px_45px_rgba(248,113,113,0.35)] hover:bg-[#ef4444] transition-all hover:scale-105 active:scale-95 uppercase tracking-widest">
-              Empezar ahora
-            </button>
-            
-            <div className="absolute -left-32 -top-4 hidden md:flex items-center gap-4 -rotate-[15deg] select-none">
-              <span className="font-serif italic text-gray-600 text-2xl">Es gratis</span>
-              <svg className="w-14 h-14 text-gray-400 mb-2" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M15 20 Q 50 20, 60 70 M60 70 L50 60 M60 70 L70 62" strokeLinecap="round" transform="scale(-1, 1) translate(-100, 0) rotate(180, 50, 50)" />
-              </svg>
-            </div>
-          </div>
+        {/* Call to Action Final */}
+        <div className="mb-6 flex flex-col items-center">
+          <button className="bg-[#f87171] text-white px-10 py-4 rounded-full text-sm font-black shadow-[0_10px_30px_rgba(248,113,113,0.3)] hover:bg-[#ef4444] transition-all hover:scale-105 active:scale-95 uppercase tracking-widest">
+            Empezar ahora
+          </button>
+          <span className="mt-3 font-serif italic text-gray-400 text-sm">Es gratis y rápido</span>
         </div>
       </div>
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap');
         .font-serif { font-family: 'Playfair Display', serif; }
-        
-        section {
-          contain: paint;
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
       `}</style>
     </section>
   );
